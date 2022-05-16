@@ -7,7 +7,7 @@ const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
-const port = 3000;
+const port = process.env.PORT || 3000;
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.json());
 let videos = [
@@ -35,14 +35,15 @@ app.get('/videos/:videoId', (req, res) => {
     !!video ? res.status(200).send(video) : res.status(404).send('video not found');
 });
 app.post('/videos', (req, res) => {
-    if (req.body.title.length <= 40 && req.body.title.length > 0) {
+    const validateBody = req.body.title.trim();
+    if (validateBody <= 40 && validateBody > 0) {
         const newVideo = {
             id: +(new Date()),
             title: req.body.title,
             author: 'it-incubator.eu'
         };
         videos.push(newVideo);
-        res.status(201).send([newVideo]);
+        res.status(201).send(newVideo);
     }
     else {
         const error = {
@@ -68,11 +69,12 @@ app.delete('/videos/:id', (req, res) => {
     }
 });
 app.put('/videos/:id', (req, res) => {
+    const validateBody = req.body.title.trim();
     const video = videos.find(v => v.id === +req.params.id);
     if (!video) {
         return res.status(404).send('Not Found');
     }
-    if (req.body.title.length <= 40 && req.body.title.length > 0) {
+    if (validateBody <= 40 && validateBody > 0) {
         video.title = req.body.title;
         //videos = videos.map((v) => v.id === +req.params.id ? {...v, title: req.body.title} : v)
         res.status(204).send(video);
