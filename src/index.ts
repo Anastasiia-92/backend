@@ -45,7 +45,7 @@ app.post('/videos', (req: Request, res: Response) => {
             author: 'it-incubator.eu'
         }
         videos.push(newVideo)
-        res.status(201).send([newVideo])
+        res.status(201).send(newVideo)
     } else {
         const error = {
             errorsMessages: [
