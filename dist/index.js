@@ -31,18 +31,18 @@ app.get('/videos', (req, res) => {
 });
 app.get('/videos/:videoId', (req, res) => {
     const id = +req.params.videoId;
-    const video = videos.filter(video => video.id === id);
-    !!video.length ? res.status(200).send(video) : res.status(404).send('video not found');
+    const video = videos.find(video => video.id === id);
+    !!video ? res.status(200).send(video) : res.status(404).send('video not found');
 });
 app.post('/videos', (req, res) => {
-    if (req.body.title.length <= 40) {
+    if (req.body.title.length <= 40 && req.body.title.length !== null) {
         const newVideo = {
             id: +(new Date()),
             title: req.body.title,
             author: 'it-incubator.eu'
         };
         videos.push(newVideo);
-        res.status(201).send(newVideo);
+        res.status(201).send([newVideo]);
     }
     else {
         const error = {
@@ -72,9 +72,10 @@ app.put('/videos/:id', (req, res) => {
     if (!video) {
         return res.status(404).send('Not Found');
     }
-    if (req.body.title.length <= 40) {
-        videos = videos.map((v) => v.id === +req.params.id ? Object.assign(Object.assign({}, v), { title: req.body.title }) : v);
-        res.status(204).send(videos);
+    if (req.body.title.length <= 40 && req.body.title.length !== null) {
+        video.title = req.body.title;
+        //videos = videos.map((v) => v.id === +req.params.id ? {...v, title: req.body.title} : v)
+        res.status(204).send(video);
     }
     else {
         const error = {
