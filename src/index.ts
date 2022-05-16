@@ -38,8 +38,9 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
 })
 
 app.post('/videos', (req: Request, res: Response) => {
+
     const validateBody = req.body.title.trim()
-    if (validateBody <= 40 && validateBody > 0) {
+    if (typeof validateBody === "string" && validateBody.length <= 40 && validateBody.length > 0) {
         const newVideo = {
             id: +(new Date()),
             title: req.body.title,
@@ -63,7 +64,7 @@ app.post('/videos', (req: Request, res: Response) => {
 
 app.delete('/videos/:id', (req: Request, res: Response) => {
     const video = videos.find(v => v.id === +req.params.id)
-    if(video) {
+    if (video) {
         videos = videos.filter(v => v.id !== +req.params.id)
         res.status(204).send('No content')
     } else {
@@ -77,10 +78,10 @@ app.put('/videos/:id', (req: Request, res: Response) => {
 
     const video = videos.find(v => v.id === +req.params.id)
 
-    if(!video) {
-        return  res.status(404).send('Not Found')
+    if (!video) {
+        return res.status(404).send('Not Found')
     }
-    if(validateBody <= 40 && validateBody > 0) {
+    if (typeof validateBody === "string" && validateBody.length <= 40 && validateBody.length > 0) {
         video.title = req.body.title
         //videos = videos.map((v) => v.id === +req.params.id ? {...v, title: req.body.title} : v)
         res.status(204).send(video)
