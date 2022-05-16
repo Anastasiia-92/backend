@@ -39,7 +39,7 @@ app.get('/videos/:videoId', (req: Request, res: Response) => {
 
 app.post('/videos', (req: Request, res: Response) => {
 
-    const validateBody = req.body.title.trim()
+    const validateBody = req.body.title?.trim()
     if (typeof validateBody === "string" && validateBody.length <= 40 && validateBody.length > 0) {
         const newVideo = {
             id: +(new Date()),
@@ -74,7 +74,7 @@ app.delete('/videos/:id', (req: Request, res: Response) => {
 })
 
 app.put('/videos/:id', (req: Request, res: Response) => {
-    const validateBody = req.body.title.trim()
+    const validateBody = req.body.title?.trim()
 
     const video = videos.find(v => v.id === +req.params.id)
 
