@@ -35,7 +35,7 @@ app.get('/videos/:videoId', (req, res) => {
     !!video ? res.status(200).send(video) : res.status(404).send('video not found');
 });
 app.post('/videos', (req, res) => {
-    if (req.body.title.length <= 40 && req.body.title.length !== null) {
+    if (req.body.title.length <= 40 && req.body.title.length > 0) {
         const newVideo = {
             id: +(new Date()),
             title: req.body.title,
@@ -72,7 +72,7 @@ app.put('/videos/:id', (req, res) => {
     if (!video) {
         return res.status(404).send('Not Found');
     }
-    if (req.body.title.length <= 40 && req.body.title.length !== null) {
+    if (req.body.title.length <= 40 && req.body.title.length > 0) {
         video.title = req.body.title;
         //videos = videos.map((v) => v.id === +req.params.id ? {...v, title: req.body.title} : v)
         res.status(204).send(video);
