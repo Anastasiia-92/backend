@@ -24,6 +24,17 @@ let bloggers = [
     {id: 5, name: 'About JS - 05', youtubeUrl: 'it-incubator.eu'},
 ]
 
+let posts = [
+    {
+        id: 1,
+        title: 'Post1',
+        shortDescription: 'Post1 description',
+        content: 'Post1 content',
+        bloggerId: 0,
+        bloggerName: "string"
+    }
+];
+
 const showError = (field: string, message: string, res: Response) => {
     const error = {
         errorsMessages: [
@@ -122,11 +133,11 @@ app.put('/videos/:id', (req: Request, res: Response) => {
 
 //bloggers
 
-app.get('/hs_01/api/bloggers', (req: Request, res: Response) => {
+app.get('/ht_01/api/bloggers', (req: Request, res: Response) => {
     res.status(200).send(bloggers)
 })
 
-app.post('/hs_01/api/bloggers', (req: Request, res: Response) => {
+app.post('/ht_01/api/bloggers', (req: Request, res: Response) => {
 
     const newBlogger = {
         id: +(new Date()),
@@ -169,14 +180,14 @@ app.post('/hs_01/api/bloggers', (req: Request, res: Response) => {
 
 })
 
-app.get('/hs_01/api/bloggers/:bloggerId', (req: Request, res: Response) => {
+app.get('/ht_01/api/bloggers/:bloggerId', (req: Request, res: Response) => {
 
     const id = +req.params.bloggerId;
     const blogger = bloggers.find(blogger => blogger.id === id)
     !!blogger ? res.status(200).send(blogger) : res.status(404).send('blogger not found')
 })
 
-app.put('/hs_01/api/bloggers/:bloggerId', (req: Request, res: Response) => {
+app.put('/ht_01/api/bloggers/:bloggerId', (req: Request, res: Response) => {
 
     const name = req.body.name;
     const youtubeUrl = req.body.youtubeUrl;
@@ -220,7 +231,7 @@ app.put('/hs_01/api/bloggers/:bloggerId', (req: Request, res: Response) => {
 
 })
 
-app.delete('/hs_01/api/bloggers/:bloggerId', (req: Request, res: Response) => {
+app.delete('/ht_01/api/bloggers/:bloggerId', (req: Request, res: Response) => {
 
     const id = +req.params.bloggerId;
     const blogger = bloggers.find(blogger => blogger.id === id)
